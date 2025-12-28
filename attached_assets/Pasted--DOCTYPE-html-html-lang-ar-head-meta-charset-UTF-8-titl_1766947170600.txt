@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Amany Sadek & Partners</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root {
+            --navy: #4F516F;
+            --gold: #D6BF78;
+            --offwhite: #F7F6F2;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Playfair Display", "Cairo", serif;
+            background-color: var(--offwhite);
+            color: var(--navy);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--navy), #3f415c);
+            padding: 40px 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo img {
+            width: 90px;
+            height: auto;
+        }
+
+        .logo h1 {
+            font-size: 26px;
+            color: var(--gold);
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            font-size: 14px;
+            color: #e5e5e5;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 16px;
+            position: relative;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            bottom: -6px;
+            left: 0;
+            transition: 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            padding: 120px 80px;
+            background: url("https://images.unsplash.com/photo-1554224154-26032ffc0d07") center/cover no-repeat;
+            position: relative;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(79, 81, 111, 0.85);
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 700px;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #ffffff;
+        }
+
+        .cta {
+            margin-top: 40px;
+            display: inline-block;
+            padding: 14px 34px;
+            background-color: var(--gold);
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .cta:hover {
+            background-color: #c7ad63;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <!-- ضع مسار اللوجو هنا -->
+        <img src="logo.png" alt="Amany Sadek & Partners Logo">
+        <div>
+            <h1>Amany Sadek & Partners</h1>
+            <span>Certified Public Accountants & Auditors</span>
+        </div>
+    </div>
+
+    <nav>
+        <a href="#">الرئيسية</a>
+        <a href="#">خدماتنا</a>
+        <a href="#">من نحن</a>
+        <a href="#">التدريب</a>
+        <a href="#">اتصل بنا</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h2>خبرة قانونية ومحاسبية تثق بها</h2>
+        <p>
+            نقدم حلول متكاملة في تأسيس الشركات، المحاسبة، المراجعة، 
+            الضرائب والإجراءات القانونية وفق أعلى المعايير المهنية.
+        </p>
+        <a href="#" class="cta">اطلب استشارة</a>
+    </div>
+</section>
+
+</body>
+</html>
