@@ -14,7 +14,8 @@ import {
   MapPin, 
   Award,
   CheckCircle2,
-  Clock
+  Clock,
+  Search
 } from "lucide-react";
 
 const NAV_LINKS = [
@@ -92,36 +93,42 @@ export default function Home() {
               description="إجراءات تأسيس شاملة لجميع أنواع الشركات، من التراخيص إلى السجلات التجارية، بسرعة وكفاءة عالية."
               icon={Building2}
               delay={0.1}
+              href="/services/company-formation"
             />
             <ServiceCard 
               title="المراجعة والتدقيق" 
               description="خدمات تدقيق مالي وفق المعايير الدولية لضمان دقة وشفافية بياناتك المالية وتعزيز الثقة."
-              icon={SearchCheck}
+              icon={Search}
               delay={0.2}
+              href="/services/auditing"
             />
             <ServiceCard 
               title="الاستشارات الضريبية" 
               description="تخطيط ضريبي ذكي وإعداد الإقرارات (قيمة مضافة، دخل) لضمان الامتثال وتوفير التكاليف."
               icon={Calculator}
               delay={0.3}
+              href="/services/tax-consulting"
             />
             <ServiceCard 
               title="الخدمات القانونية" 
               description="صياغة العقود التجارية، وتمثيل قانوني أمام الجهات المختصة لحماية مصالح شركتك."
               icon={Scale}
               delay={0.4}
+              href="/services/legal-services"
             />
             <ServiceCard 
               title="دراسات الجدوى" 
               description="دراسات اقتصادية ومالية دقيقة للمشاريع الجديدة تساعدك على اتخاذ قرارات استثمارية مدروسة."
               icon={FileText}
               delay={0.5}
+              href="/services/feasibility-studies"
             />
             <ServiceCard 
               title="إدارة الرواتب" 
               description="حلول متكاملة لإدارة كشوف المرتبات والتأمين الاجتماعي لضمان رضا الموظفين والامتثال."
               icon={Users}
               delay={0.6}
+              href="/services/payroll-management"
             />
           </div>
         </div>
@@ -355,29 +362,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  );
-}
-
-// Helper icon component for specific icon not in lucide import list above
-function SearchCheck(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M8 11.85V16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-4.15" />
-      <path d="m16 20 2 2 4-4" />
-      <path d="M19.18 10a9 9 0 1 0-2.3 4.8" />
-      <path d="M12 2a3 3 0 0 0-3 3v2" />
-      <path d="M12 7a3 3 0 0 0 3-3V2" />
-    </svg>
   );
 }
