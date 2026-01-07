@@ -1,7 +1,9 @@
 import { Navigation } from "@/components/Navigation";
 import { ServiceCard } from "@/components/ServiceCard";
+import { DetailedServiceCard } from "@/components/DetailedServiceCard";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ContactForm } from "@/components/ContactForm";
+import { ClientsSection } from "@/components/ClientsSection";
 import { 
   Calculator, 
   Scale, 
@@ -15,7 +17,13 @@ import {
   Award,
   CheckCircle2,
   Clock,
-  Search
+  Search,
+  BookOpen,
+  FileCheck,
+  GraduationCap,
+  Banknote,
+  FileEdit,
+  ClipboardList
 } from "lucide-react";
 import { 
   FaFacebook, 
@@ -32,6 +40,7 @@ const NAV_LINKS = [
   { name: "الرئيسية", href: "#home" },
   { name: "خدماتنا", href: "#services" },
   { name: "من نحن", href: "#about" },
+  { name: "عملاؤنا", href: "#clients" },
   { name: "التدريب", href: "#training" },
   { name: "اتصل بنا", href: "#contact" },
 ];
@@ -98,46 +107,110 @@ export default function Home() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ServiceCard 
-              title="تأسيس الشركات" 
-              description="إجراءات تأسيس شاملة لجميع أنواع الشركات، من التراخيص إلى السجلات التجارية، بسرعة وكفاءة عالية."
+            <DetailedServiceCard 
+              title="تأسيس الشركات الخاضعة لقوانين الاستثمار فقط" 
+              description="خدمات تأسيس شاملة للشركات الخاضعة لقوانين الاستثمار مع متابعة جميع الإجراءات القانونية والضريبية."
               icon={Building2}
               delay={0.1}
               href="/services/company-formation"
+              subServices={[
+                "استخراج شهادة عدم التباس",
+                "تحرير العقد",
+                "توثيق العقد والنشر بالصحيفة",
+                "التاشير بالسجل والغرفة التجارية حسب كل نشاط",
+                "استخراج البطاقة الضريبية",
+                "استخراج شهادة القيمة المضافة",
+                "التسجيل فى المنظومة الضريبية",
+                "التسجيل فى منظومة الفواتير الالكترونية",
+                "التسجيل فى النظام المحاسبى المبسط ( فى حالة الخضوع له )",
+                "توفير برنامج مبسط محاسبى وضريبى يتيح لنا التعامل مع المنظومة الضريبية ويتيح للعميل متابعه اعماله اول باول"
+              ]}
             />
-            <ServiceCard 
-              title="المراجعة والتدقيق" 
-              description="خدمات تدقيق مالي وفق المعايير الدولية لضمان دقة وشفافية بياناتك المالية وتعزيز الثقة."
-              icon={Search}
+            <DetailedServiceCard 
+              title="تسجيل الدفاتر القانونية للشركة" 
+              description="تسجيل جميع الدفاتر القانونية المطلوبة حسب الكيان القانونى للشركة."
+              icon={BookOpen}
               delay={0.2}
-              href="/services/auditing"
+              subServices={[
+                "دفتر جرد – دفتر يومية",
+                "دفتر حصص – دفتر اسهم",
+                "دفتر جمعيات ( عادية وغير عادية )",
+                "دفتر مجالس الادارة"
+              ]}
             />
-            <ServiceCard 
-              title="الاستشارات الضريبية" 
-              description="تخطيط ضريبي ذكي وإعداد الإقرارات (قيمة مضافة، دخل) لضمان الامتثال وتوفير التكاليف."
-              icon={Calculator}
+            <DetailedServiceCard 
+              title="المحاسبة والمراجعة" 
+              description="خدمات محاسبية ومراجعة شاملة لضمان دقة وشفافية البيانات المالية."
+              icon={Search}
               delay={0.3}
-              href="/services/tax-consulting"
+              href="/services/auditing"
+              subServices={[
+                "مراجعة شهرية وربع سنوية للحسابات الداخلية للشركة بشرط وجود ادارة ماليه تتيح لنا اجراء المراجعة",
+                "فى حاله تعذر ذلك يتم الاتفاق مع المكتب لاعداد الحسابات الداخلية طبقا لبرنامج محاسبى مبسط",
+                "يتيح للشركة متابعة اعمالها ويتيح للمكتب اصدار مراكز مالية خلال السنة والقوائم المالية فى نهاية السنة"
+              ]}
             />
-            <ServiceCard 
-              title="الخدمات القانونية" 
-              description="صياغة العقود التجارية، وتمثيل قانوني أمام الجهات المختصة لحماية مصالح شركتك."
+            <DetailedServiceCard 
+              title="الإجراءات القانونية" 
+              description="خدمات قانونية شاملة لجميع الإجراءات المطلوبة للشركات."
               icon={Scale}
               delay={0.4}
               href="/services/legal-services"
+              subServices={[
+                "اعداد واعتماد الجمعيات العامة العادية والغير عادية واجراءات التعديل ( عقد تعديل – توثيق العقود والتاشير بالسجل التجارى والنشر بالصحيفة )",
+                "اعداد ملف الاداء الاقتصادى ( لزيادة رأس المال ) واتخاذ الاجراءات اللازمة لذلك",
+                "زيادة او تخفيض رأسمال الخاص بالشركات المساهمة",
+                "اعداد واعتماد اى تعديلات قانونية لدى هيئة الاستثمار",
+                "فسخ ومحو السجل فى حالة الشركات الاعتبارية فى ذلك من بدايه وضعها تحت التصفية حتى انتهاء اجراءات المحو والفسخ"
+              ]}
             />
-            <ServiceCard 
-              title="دراسات الجدوى" 
-              description="دراسات اقتصادية ومالية دقيقة للمشاريع الجديدة تساعدك على اتخاذ قرارات استثمارية مدروسة."
-              icon={FileText}
+            <DetailedServiceCard 
+              title="الاستشارات الضريبية" 
+              description="تخطيط ضريبي ذكي وإعداد الإقرارات لضمان الامتثال وتوفير التكاليف."
+              icon={Calculator}
               delay={0.5}
-              href="/services/feasibility-studies"
+              href="/services/tax-consulting"
+              subServices={[
+                "تقديم كافة الاقرارات الضريبية ( شهرية / ربع سنوية ) اقرار ق.م – اقرار كسب عمل – اقرار خصم واضافة- الاقرار الضريبى فى نهاية السنة المالية",
+                "اى تعديلات على البطاقة الضريبية او الملف الضريبى",
+                "الفحص الضريبى ( فحص تجارى – مهنى – كسب عمل – خصم واضافه – دمغة )",
+                "حضور اللجان الداخلية – لجان الطعن – لجان انهاء المنازعات",
+                "متابعة القضايا الضريبية وحضور جلسات الخبراء"
+              ]}
+            />
+            <DetailedServiceCard 
+              title="أعمال أخرى" 
+              description="خدمات إضافية متنوعة لدعم أعمالك."
+              icon={FileCheck}
+              delay={0.6}
+              subServices={[
+                "استخراج السجل الصناعى وتجهيز الملف ( موافقة الهيئة – موافقة الدفاع المدنى – الملف الهندسى )",
+                "اعتماد العلامات التجارية"
+              ]}
+            />
+            <DetailedServiceCard 
+              title="التدريب" 
+              description="برامج تدريبية متخصصة للخريجين الجدد في مجال المحاسبة والمراجعة والضرائب."
+              icon={GraduationCap}
+              delay={0.7}
+              subServices={[
+                "تكوين مجموعات للتدريب خاصة للخريجين الجدد فى مجال المحاسبة والمراجعة والضرائب"
+              ]}
+            />
+            <DetailedServiceCard 
+              title="إعداد القوائم المالية للبنوك" 
+              description="إعداد واعتماد قوائم مالية مقدمة للبنوك للحصول على تسهيلات ائتمانية."
+              icon={Banknote}
+              delay={0.8}
+              subServices={[
+                "امكانية اعداد واعتماد قوائم ماليه مقدمة للبنوك للحصول على تسهيلات ائتمانية"
+              ]}
             />
             <ServiceCard 
               title="إدارة الرواتب" 
               description="حلول متكاملة لإدارة كشوف المرتبات والتأمين الاجتماعي لضمان رضا الموظفين والامتثال."
               icon={Users}
-              delay={0.6}
+              delay={0.9}
               href="/services/payroll-management"
             />
           </div>
@@ -200,6 +273,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Clients Section */}
+      <ClientsSection />
 
       {/* Training Section */}
       <section id="training" className="py-24 bg-[#F7F6F2]">
