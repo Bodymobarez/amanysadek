@@ -8,7 +8,16 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <img src="/lo.svg" alt="Logo" className="h-10 w-10 object-contain" />
+              <img 
+                src="/logo.svg" 
+                alt="Logo" 
+                className="h-10 w-10 object-contain"
+                onError={(e) => {
+                  // Fallback if logo doesn't load
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
               <div>
                 <h2 className="text-2xl font-bold">أماني صادق وشركاه</h2>
                 <span className="text-xs text-[#D6BF78] font-semibold">محاسبون قانونيون ومراجعون</span>

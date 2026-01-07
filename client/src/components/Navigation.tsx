@@ -64,9 +64,14 @@ export function Navigation() {
         {/* Logo */}
         <div className="flex items-center gap-4">
           <img 
-            src="/lo.svg" 
+            src="/logo.svg" 
             alt="Logo" 
             className="h-12 w-12 object-contain"
+            onError={(e) => {
+              // Fallback if logo doesn't load
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
           />
           <div className="flex flex-col">
             <Link href="/" className={cn(

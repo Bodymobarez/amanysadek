@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ContactForm } from "@/components/ContactForm";
+import { ServiceRequestForm } from "@/components/ServiceRequestForm";
 import { Users, CheckCircle2, Calculator, FileText, Shield, Clock, ArrowRight, Award, Phone, Mail, MapPin, HelpCircle, Star, ChevronDown, TrendingUp } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
@@ -403,7 +403,10 @@ export default function PayrollManagement() {
                 </div>
               </div>
               <div>
-                <ContactForm />
+                <ServiceRequestForm 
+                  serviceType="payroll-management"
+                  serviceName="إدارة الرواتب"
+                />
               </div>
             </div>
           </div>

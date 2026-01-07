@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ContactForm } from "@/components/ContactForm";
+import { ServiceRequestForm } from "@/components/ServiceRequestForm";
 import { Briefcase, CheckCircle2, TrendingUp, BarChart3, FileText, Clock, ArrowRight, Award, Phone, Mail, MapPin, HelpCircle, Star, ChevronDown, Target } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
@@ -403,7 +403,10 @@ export default function FeasibilityStudies() {
                 </div>
               </div>
               <div>
-                <ContactForm />
+                <ServiceRequestForm 
+                  serviceType="feasibility-studies"
+                  serviceName="دراسات الجدوى"
+                />
               </div>
             </div>
           </div>

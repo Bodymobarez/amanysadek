@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ContactForm } from "@/components/ContactForm";
+import { ServiceRequestForm } from "@/components/ServiceRequestForm";
 import { Calculator, CheckCircle2, FileText, Shield, TrendingDown, Clock, ArrowRight, Award, Phone, Mail, MapPin, HelpCircle, Star, ChevronDown, TrendingUp } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
@@ -385,7 +385,10 @@ export default function TaxConsulting() {
                 </div>
               </div>
               <div>
-                <ContactForm />
+                <ServiceRequestForm 
+                  serviceType="tax-consulting"
+                  serviceName="الاستشارات الضريبية"
+                />
               </div>
             </div>
           </div>

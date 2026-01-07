@@ -17,6 +17,16 @@ import {
   Clock,
   Search
 } from "lucide-react";
+import { 
+  FaFacebook, 
+  FaTwitter, 
+  FaInstagram, 
+  FaLinkedin, 
+  FaWhatsapp, 
+  FaYoutube,
+  FaTiktok,
+  FaSnapchat
+} from "react-icons/fa";
 
 const NAV_LINKS = [
   { name: "الرئيسية", href: "#home" },
@@ -303,6 +313,85 @@ export default function Home() {
                     <p className="text-gray-500">الأحد - الخميس: 9:00 ص - 5:00 م</p>
                     <p className="text-gray-500">الجمعة والسبت: مغلق</p>
                   </div>
+                </div>
+              </div>
+
+              {/* Social Media Links */}
+              <div className="mt-10">
+                <h4 className="font-bold text-lg text-[#4F516F] mb-4">تابعنا على</h4>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href="https://www.facebook.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-[#1877F2] hover:bg-[#1565C0] text-white rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg shadow-md"
+                    aria-label="Facebook"
+                  >
+                    <FaFacebook className="w-6 h-6" />
+                  </a>
+                  <a
+                    href="https://www.twitter.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-[#1DA1F2] hover:bg-[#0d8bd9] text-white rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg shadow-md"
+                    aria-label="Twitter"
+                  >
+                    <FaTwitter className="w-6 h-6" />
+                  </a>
+                  <a
+                    href="https://www.instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-gradient-to-br from-[#E4405F] to-[#C13584] hover:from-[#C13584] hover:to-[#E4405F] text-white rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg shadow-md"
+                    aria-label="Instagram"
+                  >
+                    <FaInstagram className="w-6 h-6" />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-[#0077B5] hover:bg-[#005885] text-white rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg shadow-md"
+                    aria-label="LinkedIn"
+                  >
+                    <FaLinkedin className="w-6 h-6" />
+                  </a>
+                  <a
+                    href="https://wa.me/201234567890"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg shadow-md"
+                    aria-label="WhatsApp"
+                  >
+                    <FaWhatsapp className="w-6 h-6" />
+                  </a>
+                  <a
+                    href="https://www.youtube.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-[#FF0000] hover:bg-[#CC0000] text-white rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg shadow-md"
+                    aria-label="YouTube"
+                  >
+                    <FaYoutube className="w-6 h-6" />
+                  </a>
+                  <a
+                    href="https://www.tiktok.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-[#000000] hover:bg-[#333333] text-white rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg shadow-md"
+                    aria-label="TikTok"
+                  >
+                    <FaTiktok className="w-6 h-6" />
+                  </a>
+                  <a
+                    href="https://www.snapchat.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-[#FFFC00] hover:bg-[#E6E300] text-black rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg shadow-md"
+                    aria-label="Snapchat"
+                  >
+                    <FaSnapchat className="w-6 h-6" />
+                  </a>
                 </div>
               </div>
             </div>

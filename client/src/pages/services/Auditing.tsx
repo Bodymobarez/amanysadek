@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ContactForm } from "@/components/ContactForm";
+import { ServiceRequestForm } from "@/components/ServiceRequestForm";
 import { FileCheck, CheckCircle2, Shield, TrendingUp, BarChart3, Clock, ArrowRight, Award, Phone, Mail, MapPin, HelpCircle, Star, ChevronDown, FileText, Search, Eye, Calculator, AlertTriangle } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
@@ -416,7 +416,10 @@ export default function Auditing() {
                 </div>
               </div>
               <div>
-                <ContactForm />
+                <ServiceRequestForm 
+                  serviceType="auditing"
+                  serviceName="المراجعة والتدقيق"
+                />
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ContactForm } from "@/components/ContactForm";
+import { ServiceRequestForm } from "@/components/ServiceRequestForm";
 import { Building2, CheckCircle2, FileText, Users, Shield, Clock, ArrowRight, Award, Phone, Mail, MapPin, HelpCircle, Star, ChevronDown, TrendingUp, FileCheck, Briefcase, Scale, Globe } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
@@ -429,7 +430,10 @@ export default function CompanyFormation() {
                 </div>
               </div>
               <div>
-                <ContactForm />
+                <ServiceRequestForm 
+                  serviceType="company-formation"
+                  serviceName="تأسيس الشركات"
+                />
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ContactForm } from "@/components/ContactForm";
+import { ServiceRequestForm } from "@/components/ServiceRequestForm";
 import { Scale, CheckCircle2, FileText, Shield, Gavel, Clock, ArrowRight, Award, Phone, Mail, MapPin, HelpCircle, Star, ChevronDown, Users } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
@@ -403,7 +403,10 @@ export default function LegalServices() {
                 </div>
               </div>
               <div>
-                <ContactForm />
+                <ServiceRequestForm 
+                  serviceType="legal-services"
+                  serviceName="الخدمات القانونية"
+                />
               </div>
             </div>
           </div>
