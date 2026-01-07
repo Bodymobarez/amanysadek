@@ -210,6 +210,33 @@ export async function registerRoutes(
     }
   });
 
+  app.put("/api/companies/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const input = api.companies.create.input.parse(req.body);
+      const company = await storage.updateCompany(id, input);
+      res.json(company);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({
+          message: err.errors[0].message,
+          field: err.errors[0].path.join('.'),
+        });
+      }
+      res.status(500).json({ message: "خطأ في تحديث الشركة" });
+    }
+  });
+
+  app.delete("/api/companies/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteCompany(id);
+      res.json({ message: "تم حذف الشركة بنجاح" });
+    } catch (err) {
+      res.status(500).json({ message: "خطأ في حذف الشركة" });
+    }
+  });
+
   // Incorporation Request routes
   app.post(api.incorporations.create.path, async (req, res) => {
     try {

@@ -43,17 +43,36 @@ export function ServiceRequestForm({
     },
   });
 
+  // Map frontend service types to backend service types
+  const getServiceType = (type: string): string => {
+    const mapping: Record<string, string> = {
+      "company-formation": "company_formation",
+      "tax-consulting": "tax",
+      "legal-services": "legal",
+      "feasibility-studies": "feasibility",
+      "payroll-management": "payroll",
+      "auditing": "auditing",
+    };
+    return mapping[type] || type;
+  };
+
   const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: async (data: ServiceRequestFormData) => {
-      const response = await fetch("/api/inquiries/create", {
+      const response = await fetch("/api/service-requests", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          serviceType: getServiceType(serviceType),
+          serviceName: serviceName,
           name: data.name,
           email: data.email,
-          message: `نوع الخدمة: ${serviceName}\nرقم الهاتف: ${data.phone}\nالشركة: ${data.company || "غير محدد"}\nطريقة التواصل المفضلة: ${data.preferredContact === "email" ? "بريد إلكتروني" : data.preferredContact === "phone" ? "هاتف" : "كلاهما"}\n\nالرسالة:\n${data.message}`,
+          phone: data.phone,
+          company: data.company || undefined,
+          message: data.message,
+          preferredContact: data.preferredContact || "both",
+          status: "pending",
         }),
       });
 

@@ -41,23 +41,41 @@ export default function AuditingManagement() {
         fetch("/api/audit/sessions"),
         fetch("/api/audit/reports"),
       ]);
-      const sessionsData = await sessionsRes.json();
-      const reportsData = await reportsRes.json();
+      
+      let sessionsData = [];
+      let reportsData = [];
+      
+      if (sessionsRes.ok) {
+        sessionsData = await sessionsRes.json();
+        if (!Array.isArray(sessionsData)) sessionsData = [];
+      } else {
+        console.error("Error fetching sessions:", sessionsRes.status);
+      }
+      
+      if (reportsRes.ok) {
+        reportsData = await reportsRes.json();
+        if (!Array.isArray(reportsData)) reportsData = [];
+      } else {
+        console.error("Error fetching reports:", reportsRes.status);
+      }
+      
       setSessions(sessionsData);
       setReports(reportsData);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setSessions([]);
+      setReports([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredSessions = sessions.filter(session => {
+  const filteredSessions = Array.isArray(sessions) ? sessions.filter(session => {
     const matchesSearch = session.auditType.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          session.auditorName?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === "all" || session.status === filterStatus;
     return matchesSearch && matchesStatus;
-  });
+  }) : [];
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
@@ -194,14 +212,36 @@ export default function AuditingManagement() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center gap-2">
                         <Link href={`/admin/auditing/${session.id}`}>
-                          <button className="text-blue-600 hover:text-blue-900">
+                          <button className="text-blue-600 hover:text-blue-900" title="عرض">
                             <Eye className="w-5 h-5" />
                           </button>
                         </Link>
-                        <button className="text-yellow-600 hover:text-yellow-900">
-                          <Edit className="w-5 h-5" />
-                        </button>
-                        <button className="text-red-600 hover:text-red-900">
+                        <Link href={`/admin/auditing/${session.id}/edit`}>
+                          <button className="text-yellow-600 hover:text-yellow-900" title="تعديل">
+                            <Edit className="w-5 h-5" />
+                          </button>
+                        </Link>
+                        <button
+                          onClick={async () => {
+                            if (confirm("هل أنت متأكد من حذف هذه الجلسة؟")) {
+                              try {
+                                const res = await fetch(`/api/audit/sessions/${session.id}`, {
+                                  method: "DELETE",
+                                });
+                                if (res.ok) {
+                                  fetchData();
+                                } else {
+                                  alert("حدث خطأ أثناء الحذف");
+                                }
+                              } catch (error) {
+                                console.error("Error:", error);
+                                alert("حدث خطأ أثناء الحذف");
+                              }
+                            }
+                          }}
+                          className="text-red-600 hover:text-red-900"
+                          title="حذف"
+                        >
                           <Trash2 className="w-5 h-5" />
                         </button>
                       </div>

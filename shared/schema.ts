@@ -378,3 +378,32 @@ export const insertInsuranceRecordSchema = createInsertSchema(insuranceRecords).
 
 export type InsuranceRecord = typeof insuranceRecords.$inferSelect;
 export type InsertInsuranceRecord = z.infer<typeof insertInsuranceRecordSchema>;
+
+// ==================== SERVICE REQUESTS ====================
+
+// Service Requests table - for frontend service requests
+export const serviceRequests = pgTable("service_requests", {
+  id: serial("id").primaryKey(),
+  serviceType: text("service_type").notNull(), // company_formation, auditing, tax, legal, feasibility, payroll
+  serviceName: text("service_name").notNull(), // اسم الخدمة بالعربية
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  company: text("company"),
+  message: text("message").notNull(),
+  preferredContact: text("preferred_contact").default("both"), // email, phone, both
+  status: text("status").notNull().default("pending"), // pending, in_progress, completed, cancelled
+  assignedTo: integer("assigned_to").references(() => users.id),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertServiceRequestSchema = createInsertSchema(serviceRequests).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type ServiceRequest = typeof serviceRequests.$inferSelect;
+export type InsertServiceRequest = z.infer<typeof insertServiceRequestSchema>;

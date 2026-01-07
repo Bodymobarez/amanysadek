@@ -11,7 +11,8 @@ import {
   Activity,
   CheckCircle2,
   Clock,
-  AlertCircle
+  AlertCircle,
+  Mail
 } from "lucide-react";
 
 interface Stats {
@@ -22,6 +23,7 @@ interface Stats {
   legalCases: number;
   studies: number;
   employees: number;
+  serviceRequests: number;
 }
 
 export default function Dashboard() {
@@ -33,22 +35,26 @@ export default function Dashboard() {
     legalCases: 0,
     studies: 0,
     employees: 0,
+    serviceRequests: 0,
   });
 
   useEffect(() => {
     // Fetch stats from API
     Promise.all([
-      fetch("/api/companies").then(r => r.json()).then(d => ({ companies: d.length })),
-      fetch("/api/incorporations").then(r => r.json()).then(d => ({ incorporations: d.length })),
-      fetch("/api/audit/sessions").then(r => r.json()).then(d => ({ audits: d.length })),
-      fetch("/api/tax/returns").then(r => r.json()).then(d => ({ taxReturns: d.length })),
-      fetch("/api/legal/cases").then(r => r.json()).then(d => ({ legalCases: d.length })),
-      fetch("/api/feasibility/studies").then(r => r.json()).then(d => ({ studies: d.length })),
-      fetch("/api/payroll/employees").then(r => r.json()).then(d => ({ employees: d.length })),
+      fetch("/api/companies").then(r => r.ok ? r.json() : []).then(d => ({ companies: Array.isArray(d) ? d.length : 0 })).catch(() => ({ companies: 0 })),
+      fetch("/api/incorporations").then(r => r.ok ? r.json() : []).then(d => ({ incorporations: Array.isArray(d) ? d.length : 0 })).catch(() => ({ incorporations: 0 })),
+      fetch("/api/audit/sessions").then(r => r.ok ? r.json() : []).then(d => ({ audits: Array.isArray(d) ? d.length : 0 })).catch(() => ({ audits: 0 })),
+      fetch("/api/tax/returns").then(r => r.ok ? r.json() : []).then(d => ({ taxReturns: Array.isArray(d) ? d.length : 0 })).catch(() => ({ taxReturns: 0 })),
+      fetch("/api/legal/cases").then(r => r.ok ? r.json() : []).then(d => ({ legalCases: Array.isArray(d) ? d.length : 0 })).catch(() => ({ legalCases: 0 })),
+      fetch("/api/feasibility/studies").then(r => r.ok ? r.json() : []).then(d => ({ studies: Array.isArray(d) ? d.length : 0 })).catch(() => ({ studies: 0 })),
+      fetch("/api/payroll/employees").then(r => r.ok ? r.json() : []).then(d => ({ employees: Array.isArray(d) ? d.length : 0 })).catch(() => ({ employees: 0 })),
+      fetch("/api/service-requests").then(r => r.ok ? r.json() : []).then(d => ({ serviceRequests: Array.isArray(d) ? d.length : 0 })).catch(() => ({ serviceRequests: 0 })),
     ]).then(results => {
       const combined = Object.assign({}, ...results);
       setStats(combined);
-    }).catch(console.error);
+    }).catch(error => {
+      console.error("Error fetching stats:", error);
+    });
   }, []);
 
   const services = [
@@ -99,6 +105,14 @@ export default function Dashboard() {
       href: "/admin/payroll",
       color: "bg-pink-500",
       count: stats.employees,
+    },
+    {
+      title: "طلبات الخدمات",
+      description: "عرض وإدارة طلبات الخدمات من العملاء",
+      icon: Mail,
+      href: "/admin/service-requests",
+      color: "bg-orange-500",
+      count: stats.serviceRequests,
     },
   ];
 

@@ -38,22 +38,44 @@ export default function CompaniesManagement() {
         fetch("/api/companies"),
         fetch("/api/incorporations"),
       ]);
-      const companiesData = await companiesRes.json();
-      const incorporationsData = await incorporationsRes.json();
+      
+      let companiesData = [];
+      let incorporationsData = [];
+      
+      if (companiesRes.ok) {
+        companiesData = await companiesRes.json();
+        if (!Array.isArray(companiesData)) {
+          companiesData = [];
+        }
+      } else {
+        console.error("Error fetching companies:", companiesRes.status);
+      }
+      
+      if (incorporationsRes.ok) {
+        incorporationsData = await incorporationsRes.json();
+        if (!Array.isArray(incorporationsData)) {
+          incorporationsData = [];
+        }
+      } else {
+        console.error("Error fetching incorporations:", incorporationsRes.status);
+      }
+      
       setCompanies(companiesData);
       setIncorporations(incorporationsData);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setCompanies([]);
+      setIncorporations([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredCompanies = companies.filter(company => {
+  const filteredCompanies = Array.isArray(companies) ? companies.filter(company => {
     const matchesSearch = company.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === "all" || company.status === filterStatus;
     return matchesSearch && matchesStatus;
-  });
+  }) : [];
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
@@ -199,14 +221,36 @@ export default function CompaniesManagement() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center gap-2">
                         <Link href={`/admin/companies/${company.id}`}>
-                          <button className="text-blue-600 hover:text-blue-900">
+                          <button className="text-blue-600 hover:text-blue-900" title="عرض">
                             <Eye className="w-5 h-5" />
                           </button>
                         </Link>
-                        <button className="text-yellow-600 hover:text-yellow-900">
-                          <Edit className="w-5 h-5" />
-                        </button>
-                        <button className="text-red-600 hover:text-red-900">
+                        <Link href={`/admin/companies/${company.id}/edit`}>
+                          <button className="text-yellow-600 hover:text-yellow-900" title="تعديل">
+                            <Edit className="w-5 h-5" />
+                          </button>
+                        </Link>
+                        <button
+                          onClick={async () => {
+                            if (confirm("هل أنت متأكد من حذف هذه الشركة؟")) {
+                              try {
+                                const res = await fetch(`/api/companies/${company.id}`, {
+                                  method: "DELETE",
+                                });
+                                if (res.ok) {
+                                  fetchData();
+                                } else {
+                                  alert("حدث خطأ أثناء الحذف");
+                                }
+                              } catch (error) {
+                                console.error("Error:", error);
+                                alert("حدث خطأ أثناء الحذف");
+                              }
+                            }
+                          }}
+                          className="text-red-600 hover:text-red-900"
+                          title="حذف"
+                        >
                           <Trash2 className="w-5 h-5" />
                         </button>
                       </div>

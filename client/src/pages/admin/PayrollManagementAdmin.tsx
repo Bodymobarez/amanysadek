@@ -22,20 +22,29 @@ export default function PayrollManagementAdmin() {
 
   useEffect(() => {
     fetch("/api/payroll/employees")
-      .then(r => r.json())
+      .then(r => {
+        if (r.ok) {
+          return r.json();
+        }
+        throw new Error(`HTTP ${r.status}`);
+      })
       .then(data => {
-        setEmployees(data);
+        setEmployees(Array.isArray(data) ? data : []);
         setLoading(false);
       })
-      .catch(console.error);
+      .catch(error => {
+        console.error("Error fetching employees:", error);
+        setEmployees([]);
+        setLoading(false);
+      });
   }, []);
 
-  const filteredEmployees = employees.filter(employee => {
+  const filteredEmployees = Array.isArray(employees) ? employees.filter(employee => {
     const matchesSearch = employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          employee.nationalId.includes(searchTerm);
     const matchesStatus = filterStatus === "all" || employee.status === filterStatus;
     return matchesSearch && matchesStatus;
-  });
+  }) : [];
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
@@ -47,7 +56,7 @@ export default function PayrollManagementAdmin() {
     return colors[status] || "bg-gray-100 text-gray-800";
   };
 
-  const totalSalary = employees.reduce((sum, emp) => sum + (emp.salary || 0), 0);
+  const totalSalary = Array.isArray(employees) ? employees.reduce((sum, emp) => sum + (emp.salary || 0), 0) : 0;
 
   if (loading) {
     return (
@@ -175,14 +184,36 @@ export default function PayrollManagementAdmin() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center gap-2">
                         <Link href={`/admin/payroll/employees/${employee.id}`}>
-                          <button className="text-blue-600 hover:text-blue-900">
+                          <button className="text-blue-600 hover:text-blue-900" title="عرض">
                             <Eye className="w-5 h-5" />
                           </button>
                         </Link>
-                        <button className="text-yellow-600 hover:text-yellow-900">
-                          <Edit className="w-5 h-5" />
-                        </button>
-                        <button className="text-red-600 hover:text-red-900">
+                        <Link href={`/admin/payroll/employees/${employee.id}/edit`}>
+                          <button className="text-yellow-600 hover:text-yellow-900" title="تعديل">
+                            <Edit className="w-5 h-5" />
+                          </button>
+                        </Link>
+                        <button
+                          onClick={async () => {
+                            if (confirm("هل أنت متأكد من حذف هذا الموظف؟")) {
+                              try {
+                                const res = await fetch(`/api/payroll/employees/${employee.id}`, {
+                                  method: "DELETE",
+                                });
+                                if (res.ok) {
+                                  fetchData();
+                                } else {
+                                  alert("حدث خطأ أثناء الحذف");
+                                }
+                              } catch (error) {
+                                console.error("Error:", error);
+                                alert("حدث خطأ أثناء الحذف");
+                              }
+                            }
+                          }}
+                          className="text-red-600 hover:text-red-900"
+                          title="حذف"
+                        >
                           <Trash2 className="w-5 h-5" />
                         </button>
                       </div>

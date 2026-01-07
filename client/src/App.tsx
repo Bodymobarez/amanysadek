@@ -14,11 +14,18 @@ import PayrollManagement from "@/pages/services/PayrollManagement";
 // Admin pages
 import Dashboard from "@/pages/admin/Dashboard";
 import CompaniesManagement from "@/pages/admin/CompaniesManagement";
+import CompanyForm from "@/pages/admin/CompanyForm";
 import AuditingManagement from "@/pages/admin/AuditingManagement";
+import AuditSessionForm from "@/pages/admin/AuditSessionForm";
 import TaxManagement from "@/pages/admin/TaxManagement";
+import TaxReturnForm from "@/pages/admin/TaxReturnForm";
 import LegalManagement from "@/pages/admin/LegalManagement";
+import LegalCaseForm from "@/pages/admin/LegalCaseForm";
 import FeasibilityManagement from "@/pages/admin/FeasibilityManagement";
+import FeasibilityStudyForm from "@/pages/admin/FeasibilityStudyForm";
 import PayrollManagementAdmin from "@/pages/admin/PayrollManagementAdmin";
+import EmployeeForm from "@/pages/admin/EmployeeForm";
+import ServiceRequestsManagement from "@/pages/admin/ServiceRequestsManagement";
 
 function Router() {
   return (
@@ -33,11 +40,24 @@ function Router() {
       {/* Admin Routes */}
       <Route path="/admin" component={Dashboard} />
       <Route path="/admin/companies" component={CompaniesManagement} />
+      <Route path="/admin/companies/new" component={CompanyForm} />
+      <Route path="/admin/companies/:id/edit" component={CompanyForm} />
       <Route path="/admin/auditing" component={AuditingManagement} />
+      <Route path="/admin/auditing/new" component={AuditSessionForm} />
+      <Route path="/admin/auditing/:id/edit" component={AuditSessionForm} />
       <Route path="/admin/tax" component={TaxManagement} />
+      <Route path="/admin/tax/returns/new" component={TaxReturnForm} />
+      <Route path="/admin/tax/returns/:id/edit" component={TaxReturnForm} />
       <Route path="/admin/legal" component={LegalManagement} />
+      <Route path="/admin/legal/cases/new" component={LegalCaseForm} />
+      <Route path="/admin/legal/cases/:id/edit" component={LegalCaseForm} />
       <Route path="/admin/feasibility" component={FeasibilityManagement} />
+      <Route path="/admin/feasibility/studies/new" component={FeasibilityStudyForm} />
+      <Route path="/admin/feasibility/studies/:id/edit" component={FeasibilityStudyForm} />
       <Route path="/admin/payroll" component={PayrollManagementAdmin} />
+      <Route path="/admin/payroll/employees/new" component={EmployeeForm} />
+      <Route path="/admin/payroll/employees/:id/edit" component={EmployeeForm} />
+      <Route path="/admin/service-requests" component={ServiceRequestsManagement} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>

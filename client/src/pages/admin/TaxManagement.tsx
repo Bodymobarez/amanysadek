@@ -22,19 +22,28 @@ export default function TaxManagement() {
 
   useEffect(() => {
     fetch("/api/tax/returns")
-      .then(r => r.json())
+      .then(r => {
+        if (r.ok) {
+          return r.json();
+        }
+        throw new Error(`HTTP ${r.status}`);
+      })
       .then(data => {
-        setReturns(data);
+        setReturns(Array.isArray(data) ? data : []);
         setLoading(false);
       })
-      .catch(console.error);
+      .catch(error => {
+        console.error("Error fetching tax returns:", error);
+        setReturns([]);
+        setLoading(false);
+      });
   }, []);
 
-  const filteredReturns = returns.filter(taxReturn => {
+  const filteredReturns = Array.isArray(returns) ? returns.filter(taxReturn => {
     const matchesSearch = taxReturn.returnType.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === "all" || taxReturn.status === filterStatus;
     return matchesSearch && matchesStatus;
-  });
+  }) : [];
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
@@ -169,14 +178,36 @@ export default function TaxManagement() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center gap-2">
                         <Link href={`/admin/tax/returns/${taxReturn.id}`}>
-                          <button className="text-blue-600 hover:text-blue-900">
+                          <button className="text-blue-600 hover:text-blue-900" title="عرض">
                             <Eye className="w-5 h-5" />
                           </button>
                         </Link>
-                        <button className="text-yellow-600 hover:text-yellow-900">
-                          <Edit className="w-5 h-5" />
-                        </button>
-                        <button className="text-red-600 hover:text-red-900">
+                        <Link href={`/admin/tax/returns/${taxReturn.id}/edit`}>
+                          <button className="text-yellow-600 hover:text-yellow-900" title="تعديل">
+                            <Edit className="w-5 h-5" />
+                          </button>
+                        </Link>
+                        <button
+                          onClick={async () => {
+                            if (confirm("هل أنت متأكد من حذف هذا الإقرار؟")) {
+                              try {
+                                const res = await fetch(`/api/tax/returns/${taxReturn.id}`, {
+                                  method: "DELETE",
+                                });
+                                if (res.ok) {
+                                  fetchData();
+                                } else {
+                                  alert("حدث خطأ أثناء الحذف");
+                                }
+                              } catch (error) {
+                                console.error("Error:", error);
+                                alert("حدث خطأ أثناء الحذف");
+                              }
+                            }
+                          }}
+                          className="text-red-600 hover:text-red-900"
+                          title="حذف"
+                        >
                           <Trash2 className="w-5 h-5" />
                         </button>
                       </div>

@@ -16,6 +16,7 @@ import {
   employees,
   payrollRecords,
   insuranceRecords,
+  serviceRequests,
   type InsertInquiry, 
   type Inquiry,
   type InsertCompany,
@@ -48,6 +49,8 @@ import {
   type PayrollRecord,
   type InsertInsuranceRecord,
   type InsuranceRecord,
+  type InsertServiceRequest,
+  type ServiceRequest,
 } from "@shared/schema";
 import { eq, and, desc } from "drizzle-orm";
 
@@ -111,6 +114,19 @@ export class DatabaseStorage implements IStorage {
       .where(eq(companies.id, id))
       .returning();
     return company;
+  }
+
+  async updateCompany(id: number, updates: Partial<InsertCompany>): Promise<Company> {
+    const [company] = await db
+      .update(companies)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(companies.id, id))
+      .returning();
+    return company;
+  }
+
+  async deleteCompany(id: number): Promise<void> {
+    await db.delete(companies).where(eq(companies.id, id));
   }
 
   // Incorporation Requests
@@ -242,6 +258,28 @@ export class DatabaseStorage implements IStorage {
     return session;
   }
 
+  async deleteAuditSession(id: number): Promise<void> {
+    await db.delete(auditSessions).where(eq(auditSessions.id, id));
+  }
+
+  async getAuditReportById(id: number): Promise<AuditReport | undefined> {
+    const [report] = await db.select().from(auditReports).where(eq(auditReports.id, id));
+    return report;
+  }
+
+  async updateAuditReport(id: number, updates: Partial<InsertAuditReport>): Promise<AuditReport> {
+    const [report] = await db
+      .update(auditReports)
+      .set(updates)
+      .where(eq(auditReports.id, id))
+      .returning();
+    return report;
+  }
+
+  async deleteAuditReport(id: number): Promise<void> {
+    await db.delete(auditReports).where(eq(auditReports.id, id));
+  }
+
   async createAuditReport(report: InsertAuditReport): Promise<AuditReport> {
     const [result] = await db.insert(auditReports).values(report).returning();
     return result;
@@ -276,6 +314,28 @@ export class DatabaseStorage implements IStorage {
       .where(eq(taxReturns.id, id))
       .returning();
     return result;
+  }
+
+  async deleteTaxReturn(id: number): Promise<void> {
+    await db.delete(taxReturns).where(eq(taxReturns.id, id));
+  }
+
+  async getTaxInspectionById(id: number): Promise<TaxInspection | undefined> {
+    const [result] = await db.select().from(taxInspections).where(eq(taxInspections.id, id));
+    return result;
+  }
+
+  async updateTaxInspection(id: number, updates: Partial<InsertTaxInspection>): Promise<TaxInspection> {
+    const [result] = await db
+      .update(taxInspections)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(taxInspections.id, id))
+      .returning();
+    return result;
+  }
+
+  async deleteTaxInspection(id: number): Promise<void> {
+    await db.delete(taxInspections).where(eq(taxInspections.id, id));
   }
 
   async createTaxInspection(inspection: InsertTaxInspection): Promise<TaxInspection> {
@@ -315,6 +375,23 @@ export class DatabaseStorage implements IStorage {
       .where(eq(legalCases.id, id))
       .returning();
     return result;
+  }
+
+  async deleteLegalCase(id: number): Promise<void> {
+    await db.delete(legalCases).where(eq(legalCases.id, id));
+  }
+
+  async updateContract(id: number, updates: Partial<InsertContract>): Promise<Contract> {
+    const [result] = await db
+      .update(contracts)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(contracts.id, id))
+      .returning();
+    return result;
+  }
+
+  async deleteContract(id: number): Promise<void> {
+    await db.delete(contracts).where(eq(contracts.id, id));
   }
 
   async createContract(contract: InsertContract): Promise<Contract> {
@@ -358,6 +435,10 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
+  async deleteFeasibilityStudy(id: number): Promise<void> {
+    await db.delete(feasibilityStudies).where(eq(feasibilityStudies.id, id));
+  }
+
   // ==================== PAYROLL SERVICE ====================
   async createEmployee(employee: InsertEmployee): Promise<Employee> {
     const [result] = await db.insert(employees).values(employee).returning();
@@ -385,6 +466,46 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
+  async deleteEmployee(id: number): Promise<void> {
+    await db.delete(employees).where(eq(employees.id, id));
+  }
+
+  async getPayrollRecordById(id: number): Promise<PayrollRecord | undefined> {
+    const [result] = await db.select().from(payrollRecords).where(eq(payrollRecords.id, id));
+    return result;
+  }
+
+  async updatePayrollRecord(id: number, updates: Partial<InsertPayrollRecord>): Promise<PayrollRecord> {
+    const [result] = await db
+      .update(payrollRecords)
+      .set(updates)
+      .where(eq(payrollRecords.id, id))
+      .returning();
+    return result;
+  }
+
+  async deletePayrollRecord(id: number): Promise<void> {
+    await db.delete(payrollRecords).where(eq(payrollRecords.id, id));
+  }
+
+  async getInsuranceRecordById(id: number): Promise<InsuranceRecord | undefined> {
+    const [result] = await db.select().from(insuranceRecords).where(eq(insuranceRecords.id, id));
+    return result;
+  }
+
+  async updateInsuranceRecord(id: number, updates: Partial<InsertInsuranceRecord>): Promise<InsuranceRecord> {
+    const [result] = await db
+      .update(insuranceRecords)
+      .set(updates)
+      .where(eq(insuranceRecords.id, id))
+      .returning();
+    return result;
+  }
+
+  async deleteInsuranceRecord(id: number): Promise<void> {
+    await db.delete(insuranceRecords).where(eq(insuranceRecords.id, id));
+  }
+
   async createPayrollRecord(record: InsertPayrollRecord): Promise<PayrollRecord> {
     const [result] = await db.insert(payrollRecords).values(record).returning();
     return result;
@@ -410,6 +531,49 @@ export class DatabaseStorage implements IStorage {
       return await db.select().from(insuranceRecords).where(eq(insuranceRecords.companyId, companyId)).orderBy(desc(insuranceRecords.createdAt));
     }
     return await db.select().from(insuranceRecords).orderBy(desc(insuranceRecords.createdAt));
+  }
+
+  // ==================== SERVICE REQUESTS ====================
+  async createServiceRequest(request: InsertServiceRequest): Promise<ServiceRequest> {
+    const [result] = await db.insert(serviceRequests).values(request).returning();
+    return result;
+  }
+
+  async getServiceRequests(serviceType?: string, status?: string): Promise<ServiceRequest[]> {
+    if (serviceType && status) {
+      return await db.select().from(serviceRequests)
+        .where(and(eq(serviceRequests.serviceType, serviceType), eq(serviceRequests.status, status)))
+        .orderBy(desc(serviceRequests.createdAt));
+    }
+    if (serviceType) {
+      return await db.select().from(serviceRequests)
+        .where(eq(serviceRequests.serviceType, serviceType))
+        .orderBy(desc(serviceRequests.createdAt));
+    }
+    if (status) {
+      return await db.select().from(serviceRequests)
+        .where(eq(serviceRequests.status, status))
+        .orderBy(desc(serviceRequests.createdAt));
+    }
+    return await db.select().from(serviceRequests).orderBy(desc(serviceRequests.createdAt));
+  }
+
+  async getServiceRequestById(id: number): Promise<ServiceRequest | undefined> {
+    const [result] = await db.select().from(serviceRequests).where(eq(serviceRequests.id, id));
+    return result;
+  }
+
+  async updateServiceRequest(id: number, updates: Partial<InsertServiceRequest>): Promise<ServiceRequest> {
+    const [result] = await db
+      .update(serviceRequests)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(serviceRequests.id, id))
+      .returning();
+    return result;
+  }
+
+  async deleteServiceRequest(id: number): Promise<void> {
+    await db.delete(serviceRequests).where(eq(serviceRequests.id, id));
   }
 }
 

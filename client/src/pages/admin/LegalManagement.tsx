@@ -22,20 +22,29 @@ export default function LegalManagement() {
 
   useEffect(() => {
     fetch("/api/legal/cases")
-      .then(r => r.json())
+      .then(r => {
+        if (r.ok) {
+          return r.json();
+        }
+        throw new Error(`HTTP ${r.status}`);
+      })
       .then(data => {
-        setCases(data);
+        setCases(Array.isArray(data) ? data : []);
         setLoading(false);
       })
-      .catch(console.error);
+      .catch(error => {
+        console.error("Error fetching legal cases:", error);
+        setCases([]);
+        setLoading(false);
+      });
   }, []);
 
-  const filteredCases = cases.filter(legalCase => {
+  const filteredCases = Array.isArray(cases) ? cases.filter(legalCase => {
     const matchesSearch = legalCase.caseType.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          legalCase.caseNumber?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === "all" || legalCase.status === filterStatus;
     return matchesSearch && matchesStatus;
-  });
+  }) : [];
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
@@ -170,14 +179,36 @@ export default function LegalManagement() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center gap-2">
                         <Link href={`/admin/legal/cases/${legalCase.id}`}>
-                          <button className="text-blue-600 hover:text-blue-900">
+                          <button className="text-blue-600 hover:text-blue-900" title="عرض">
                             <Eye className="w-5 h-5" />
                           </button>
                         </Link>
-                        <button className="text-yellow-600 hover:text-yellow-900">
-                          <Edit className="w-5 h-5" />
-                        </button>
-                        <button className="text-red-600 hover:text-red-900">
+                        <Link href={`/admin/legal/cases/${legalCase.id}/edit`}>
+                          <button className="text-yellow-600 hover:text-yellow-900" title="تعديل">
+                            <Edit className="w-5 h-5" />
+                          </button>
+                        </Link>
+                        <button
+                          onClick={async () => {
+                            if (confirm("هل أنت متأكد من حذف هذه القضية؟")) {
+                              try {
+                                const res = await fetch(`/api/legal/cases/${legalCase.id}`, {
+                                  method: "DELETE",
+                                });
+                                if (res.ok) {
+                                  fetchData();
+                                } else {
+                                  alert("حدث خطأ أثناء الحذف");
+                                }
+                              } catch (error) {
+                                console.error("Error:", error);
+                                alert("حدث خطأ أثناء الحذف");
+                              }
+                            }
+                          }}
+                          className="text-red-600 hover:text-red-900"
+                          title="حذف"
+                        >
                           <Trash2 className="w-5 h-5" />
                         </button>
                       </div>
