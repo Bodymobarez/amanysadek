@@ -63,16 +63,18 @@ export function Navigation() {
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-4">
-          <img 
-            src="/logo.svg" 
-            alt="Logo" 
-            className="h-12 w-12 object-contain"
-            onError={(e) => {
-              // Fallback if logo doesn't load
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-            }}
-          />
+          <Link href="/" className="flex items-center">
+            <img 
+              src="/logo.svg" 
+              alt="Logo" 
+              className="h-14 w-14 object-contain transition-transform hover:scale-105"
+              onError={(e) => {
+                // Fallback if logo doesn't load
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
+          </Link>
           <div className="flex flex-col">
             <Link href="/" className={cn(
               "text-2xl font-bold leading-tight transition-colors",
