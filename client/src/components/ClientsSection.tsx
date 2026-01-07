@@ -8,6 +8,7 @@ interface Client {
 }
 
 const clients: Client[] = [
+  // عملاء تجاريون
   { name: "مصر للصناعه والتجاره ( منترا )", activity: "منطقة حرة/ تصدير", startYear: 1997 },
   { name: "الدار المصرية للكتب", activity: "توريدات", startYear: 1997 },
   { name: "عميلى ترافيل للسياحة", activity: "سياحة", startYear: 2010 },
@@ -32,6 +33,18 @@ const clients: Client[] = [
   { name: "منشأة يونيفيرسال", activity: "مهنى واستيراد واتصدير", startYear: 1997 },
   { name: "يونى تريد للتوكيلات التجارية", activity: "استيراد وتصدير", startYear: 2008 },
   { name: "منشأ العربية للتوريدات", activity: "توريدات", startYear: 2020 },
+  // عملاء طبيون
+  { name: "أ.د. حازم السباعى", activity: "جراحة عظام", startYear: 2008 },
+  { name: "أ.د. حسام عبد القادرى الفل", activity: "جراحة اورام", startYear: 2010 },
+  { name: "أ.د. احمد ابراهيم ابو الفتوح", activity: "استشارى تخدير", startYear: 2005 },
+  { name: "أ.د.احمد القاصد", activity: "جراحة اورام", startYear: 2015 },
+  { name: "أ.د. ممدول الشال", activity: "استشارى الام", startYear: 2020 },
+  { name: "أ.د. محمد مصطفى العليمى", activity: "جراحة اورام", startYear: 2020 },
+  // عملاء قانونيون وإعلاميون
+  { name: "أ. احمد محمد مليجى", activity: "استشارات قانونية", startYear: 1997 },
+  { name: "أ. عزه السيد مصطفى", activity: "اعلامية", startYear: 2015 },
+  { name: "أ. دينا محمد رامز", activity: "اعلامية", startYear: 2015 },
+  { name: "أ. شافكى المنيرى", activity: "اعلامية", startYear: 2020 },
 ];
 
 export function ClientsSection() {
